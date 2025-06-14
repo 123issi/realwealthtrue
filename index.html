@@ -1,0 +1,634 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RealWealth24 - Votre Solution Immobilière</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.11.4/dist/gsap.min.js"></script>
+    <style>
+        /* CSS will be placed here but should be in separate file in production */
+        :root {
+            --primary-blue: #1a73e8;
+            --secondary-blue: #4285f4;
+            --white: #ffffff;
+            --red: #ea4335;
+            --light-gray: #f5f5f5;
+            --dark-gray: #333333;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+        
+        body {
+            background-color: var(--light-gray);
+            color: var(--dark-gray);
+            overflow-x: hidden;
+        }
+        
+        /* Add all other CSS here */
+    </style>
+</head>
+<body>
+    <!-- Loading Screen -->
+    <div class="loading-screen">
+        <div class="loading-spinner"></div>
+        <h2>RealWealth24</h2>
+        <p>Chargement de votre expérience immobilière...</p>
+    </div>
+
+    <!-- 3D Globe Animation Container -->
+    <div id="globe-container"></div>
+
+    <!-- Main Content (initially hidden) -->
+    <div class="main-content" style="display: none;">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-container">
+                <div class="logo">
+                    <h1>RealWealth24</h1>
+                    <p>Votre porte vers la propriété idéale</p>
+                </div>
+                
+                <nav class="main-nav">
+                    <ul>
+                        <li><a href="#" class="active">Accueil</a></li>
+                        <li><a href="#properties">Propriétés</a></li>
+                        <li><a href="#about">À Propos</a></li>
+                        <li><a href="#contact">Contact</a></li>
+                    </ul>
+                </nav>
+                
+                <div class="auth-buttons">
+                    <button id="login-btn" class="btn btn-outline">Connexion</button>
+                    <button id="register-btn" class="btn btn-primary">Inscription</button>
+                </div>
+                
+                <button class="mobile-menu-btn">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+        </header>
+
+        <!-- Mobile Sidebar -->
+        <div class="mobile-sidebar">
+            <div class="sidebar-header">
+                <h3>RealWealth24</h3>
+                <button class="close-sidebar"><i class="fas fa-times"></i></button>
+            </div>
+            <nav class="sidebar-nav">
+                <ul>
+                    <li><a href="#" class="active">Accueil</a></li>
+                    <li><a href="#properties">Propriétés</a></li>
+                    <li><a href="#about">À Propos</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                    <li><button id="mobile-login-btn" class="btn btn-outline">Connexion</button></li>
+                    <li><button id="mobile-register-btn" class="btn btn-primary">Inscription</button></li>
+                </ul>
+            </nav>
+        </div>
+
+        <!-- Hero Section -->
+        <section class="hero">
+            <div class="hero-content">
+                <h1>Trouvez Votre Maison de Rêve</h1>
+                <p>Découvrez des milliers de propriétés à louer ou à acheter dans toute la région</p>
+                
+                <div class="search-box">
+                    <div class="search-tabs">
+                        <button class="tab-btn active" data-tab="rent">À Louer</button>
+                        <button class="tab-btn" data-tab="buy">À Acheter</button>
+                        <button class="tab-btn" data-tab="land">Terrains</button>
+                    </div>
+                    
+                    <div class="search-form">
+                        <div class="form-group">
+                            <select id="property-type" class="form-control">
+                                <option value="">Type de propriété</option>
+                                <option value="house">Maison</option>
+                                <option value="apartment">Appartement</option>
+                                <option value="villa">Villa</option>
+                                <option value="land">Terrain</option>
+                                <option value="commercial">Commercial</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <select id="location" class="form-control">
+                                <option value="">Sélectionnez un quartier</option>
+                                <option value="buyenzi">Buyenzi</option>
+                                <option value="jabe">Jabe</option>
+                                <option value="muyinga">Muyinga</option>
+                                <option value="rumonge">Rumonge</option>
+                                <option value="ngozi">Ngozi</option>
+                                <option value="plage">Plage</option>
+                                <option value="airport">Airport</option>
+                                <option value="bwiza">Bwiza</option>
+                                <option value="nyakabiga">Nyakabiga</option>
+                                <option value="gihosha">Gihosha</option>
+                                <option value="kinindo">Kinindo</option>
+                                <option value="kigobe">Kigobe</option>
+                                <option value="kibenga">Kibenga</option>
+                                <option value="ngagara">Ngagara</option>
+                                <option value="mtakura">Mtakura</option>
+                                <option value="kinama">Kinama</option>
+                                <option value="cibitoki">Cibitoki</option>
+                                <option value="kamenge">Kamenge</option>
+                                <option value="charama">Charama</option>
+                                <option value="buterere">Buterere</option>
+                                <option value="maramvya">Maramvya</option>
+                                <option value="kajaga">Kajaga</option>
+                                <option value="kanyosha">Kanyosha</option>
+                                <option value="nyabugereasiatique">Nyabugere Asiatique</option>
+                                <option value="miroire">Miroire</option>
+                                <option value="kabondo">Kabondo</option>
+                                <option value="gatumba">Gatumba</option>
+                                <option value="kinanira1">Kinanira 1</option>
+                                <option value="kinanira2">Kinanira 2</option>
+                                <option value="kinanira3">Kinanira 3</option>
+                                <option value="okafe">Okafe</option>
+                                <option value="centre-ville">Centre Ville</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <select id="price-range" class="form-control">
+                                <option value="">Fourchette de prix</option>
+                                <option value="0-500">0 - 500 $</option>
+                                <option value="500-1000">500 - 1000 $</option>
+                                <option value="1000-2000">1000 - 2000 $</option>
+                                <option value="2000-5000">2000 - 5000 $</option>
+                                <option value="5000+">5000+ $</option>
+                            </select>
+                        </div>
+                        
+                        <button id="search-btn" class="btn btn-primary">
+                            <i class="fas fa-search"></i> Rechercher
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="hero-image">
+                <div class="image-slider">
+                    <div class="slide active" style="background-image: url('https://source.unsplash.com/random/800x600/?house')"></div>
+                    <div class="slide" style="background-image: url('https://source.unsplash.com/random/800x600/?apartment')"></div>
+                    <div class="slide" style="background-image: url('https://source.unsplash.com/random/800x600/?villa')"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Features Section -->
+        <section class="features">
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-home"></i>
+                </div>
+                <h3>Large Sélection</h3>
+                <p>Des milliers de propriétés à travers la région</p>
+            </div>
+            
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-shield-alt"></i>
+                </div>
+                <h3>Propriétaires Vérifiés</h3>
+                <p>Tous les propriétaires sont authentifiés</p>
+            </div>
+            
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-search-dollar"></i>
+                </div>
+                <h3>Recherche Avancée</h3>
+                <p>Trouvez exactement ce que vous cherchez</p>
+            </div>
+            
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-headset"></i>
+                </div>
+                <h3>Support 24/7</h3>
+                <p>Notre équipe est toujours disponible</p>
+            </div>
+        </section>
+
+        <!-- Properties Section -->
+        <section id="properties" class="properties">
+            <div class="section-header">
+                <h2>Propriétés Populaires</h2>
+                <p>Découvrez nos meilleures offres</p>
+            </div>
+            
+            <div class="property-grid" id="property-grid">
+                <!-- Properties will be loaded here dynamically -->
+                <div class="property-card skeleton">
+                    <div class="property-image"></div>
+                    <div class="property-details">
+                        <h3></h3>
+                        <p></p>
+                        <div class="property-price"></div>
+                    </div>
+                </div>
+                
+                <div class="property-card skeleton">
+                    <div class="property-image"></div>
+                    <div class="property-details">
+                        <h3></h3>
+                        <p></p>
+                        <div class="property-price"></div>
+                    </div>
+                </div>
+                
+                <div class="property-card skeleton">
+                    <div class="property-image"></div>
+                    <div class="property-details">
+                        <h3></h3>
+                        <p></p>
+                        <div class="property-price"></div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="view-all">
+                <button class="btn btn-outline">Voir Toutes les Propriétés</button>
+            </div>
+        </section>
+
+        <!-- How It Works Section -->
+        <section class="how-it-works">
+            <div class="section-header">
+                <h2>Comment ça marche</h2>
+                <p>Trois étapes simples pour trouver votre propriété</p>
+            </div>
+            
+            <div class="steps">
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <h3>Recherche</h3>
+                    <p>Utilisez nos filtres avancés pour trouver la propriété parfaite</p>
+                </div>
+                
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <h3>Contact</h3>
+                    <p>Contactez le propriétaire ou notre équipe pour une visite</p>
+                </div>
+                
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <h3>Finalisation</h3>
+                    <p>Signez le contrat et emménagez dans votre nouvelle maison</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Testimonials Section -->
+        <section class="testimonials">
+            <div class="section-header">
+                <h2>Témoignages</h2>
+                <p>Ce que nos clients disent</p>
+            </div>
+            
+            <div class="testimonial-slider">
+                <div class="testimonial-card">
+                    <div class="testimonial-content">
+                        <p>"J'ai trouvé ma maison de rêve en seulement 2 jours grâce à RealWealth24. Le processus était simple et transparent."</p>
+                    </div>
+                    <div class="testimonial-author">
+                        <img src="https://randomuser.me/api/portraits/women/32.jpg" alt="Client">
+                        <h4>Marie K.</h4>
+                        <span>Locataire</span>
+                    </div>
+                </div>
+                
+                <div class="testimonial-card">
+                    <div class="testimonial-content">
+                        <p>"En tant que propriétaire, RealWealth24 m'a aidé à trouver des locataires fiables rapidement. Je recommande vivement!"</p>
+                    </div>
+                    <div class="testimonial-author">
+                        <img src="https://randomuser.me/api/portraits/men/45.jpg" alt="Client">
+                        <h4>Jean P.</h4>
+                        <span>Propriétaire</span>
+                    </div>
+                </div>
+                
+                <div class="testimonial-card">
+                    <div class="testimonial-content">
+                        <p>"Le support client est exceptionnel. Ils m'ont guidé à chaque étape de mon achat immobilier."</p>
+                    </div>
+                    <div class="testimonial-author">
+                        <img src="https://randomuser.me/api/portraits/women/68.jpg" alt="Client">
+                        <h4>Sophie D.</h4>
+                        <span>Acheteuse</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Call to Action -->
+        <section class="cta">
+            <div class="cta-content">
+                <h2>Prêt à trouver votre propriété idéale?</h2>
+                <p>Inscrivez-vous maintenant pour accéder à toutes nos fonctionnalités</p>
+                <button class="btn btn-primary">Commencer Maintenant</button>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <div class="footer-container">
+                <div class="footer-col">
+                    <h3>RealWealth24</h3>
+                    <p>Votre porte vers la propriété idéale depuis 2023.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+                
+                <div class="footer-col">
+                    <h3>Liens Rapides</h3>
+                    <ul>
+                        <li><a href="#">Accueil</a></li>
+                        <li><a href="#properties">Propriétés</a></li>
+                        <li><a href="#about">À Propos</a></li>
+                        <li><a href="#contact">Contact</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-col">
+                    <h3>Quartiers</h3>
+                    <ul>
+                        <li><a href="#">Buyenzi</a></li>
+                        <li><a href="#">Bwiza</a></li>
+                        <li><a href="#">Nyakabiga</a></li>
+                        <li><a href="#">Gihosha</a></li>
+                        <li><a href="#">Voir Plus</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-col">
+                    <h3>Contact</h3>
+                    <ul>
+                        <li><i class="fas fa-map-marker-alt"></i> Bujumbura, Burundi</li>
+                        <li><i class="fas fa-phone"></i> +257 12 34 56 78</li>
+                        <li><i class="fas fa-envelope"></i> info@realwealth24.com</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2023 RealWealth24. Tous droits réservés.</p>
+                <div class="footer-links">
+                    <a href="#">Conditions d'utilisation</a>
+                    <a href="#">Politique de confidentialité</a>
+                </div>
+            </div>
+        </footer>
+
+        <!-- Auth Modals -->
+        <div class="auth-modal" id="login-modal">
+            <div class="modal-content">
+                <button class="close-modal"><i class="fas fa-times"></i></button>
+                <h2>Connexion</h2>
+                <form id="login-form">
+                    <div class="form-group">
+                        <label for="login-email">Email</label>
+                        <input type="email" id="login-email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="login-password">Mot de passe</label>
+                        <input type="password" id="login-password" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Se Connecter</button>
+                </form>
+                <p class="auth-switch">Pas encore de compte? <a href="#" id="switch-to-register">S'inscrire</a></p>
+            </div>
+        </div>
+
+        <div class="auth-modal" id="register-modal">
+            <div class="modal-content">
+                <button class="close-modal"><i class="fas fa-times"></i></button>
+                <h2>Inscription</h2>
+                <form id="register-form">
+                    <div class="form-group">
+                        <label for="register-name">Nom Complet</label>
+                        <input type="text" id="register-name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="register-email">Email</label>
+                        <input type="email" id="register-email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="register-phone">Téléphone</label>
+                        <input type="tel" id="register-phone" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="register-password">Mot de passe</label>
+                        <input type="password" id="register-password" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="register-confirm-password">Confirmer le mot de passe</label>
+                        <input type="password" id="register-confirm-password" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="register-type">Je suis:</label>
+                        <select id="register-type" required>
+                            <option value="">Sélectionnez un type</option>
+                            <option value="tenant">Locataire</option>
+                            <option value="landlord">Propriétaire</option>
+                            <option value="buyer">Acheteur</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-primary">S'inscrire</button>
+                </form>
+                <p class="auth-switch">Déjà un compte? <a href="#" id="switch-to-login">Se Connecter</a></p>
+            </div>
+        </div>
+
+        <!-- Property Upload Modal (for landlords) -->
+        <div class="auth-modal" id="property-upload-modal">
+            <div class="modal-content">
+                <button class="close-modal"><i class="fas fa-times"></i></button>
+                <h2>Ajouter une Propriété</h2>
+                <form id="property-upload-form">
+                    <div class="form-group">
+                        <label for="property-title">Titre</label>
+                        <input type="text" id="property-title" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="property-description">Description</label>
+                        <textarea id="property-description" rows="4" required></textarea>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="property-type-upload">Type de propriété</label>
+                        <select id="property-type-upload" required>
+                            <option value="">Sélectionnez un type</option>
+                            <option value="house">Maison</option>
+                            <option value="apartment">Appartement</option>
+                            <option value="villa">Villa</option>
+                            <option value="land">Terrain</option>
+                            <option value="commercial">Commercial</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="property-location">Quartier</label>
+                        <select id="property-location" required>
+                            <option value="">Sélectionnez un quartier</option>
+                            <option value="buyenzi">Buyenzi</option>
+                            <option value="jabe">Jabe</option>
+                            <option value="muyinga">Muyinga</option>
+                            <option value="rumonge">Rumonge</option>
+                            <option value="ngozi">Ngozi</option>
+                            <option value="plage">Plage</option>
+                            <option value="airport">Airport</option>
+                            <option value="bwiza">Bwiza</option>
+                            <option value="nyakabiga">Nyakabiga</option>
+                            <option value="gihosha">Gihosha</option>
+                            <option value="kinindo">Kinindo</option>
+                            <option value="kigobe">Kigobe</option>
+                            <option value="kibenga">Kibenga</option>
+                            <option value="ngagara">Ngagara</option>
+                            <option value="mtakura">Mtakura</option>
+                            <option value="kinama">Kinama</option>
+                            <option value="cibitoki">Cibitoki</option>
+                            <option value="kamenge">Kamenge</option>
+                            <option value="charama">Charama</option>
+                            <option value="buterere">Buterere</option>
+                            <option value="maramvya">Maramvya</option>
+                            <option value="kajaga">Kajaga</option>
+                            <option value="kanyosha">Kanyosha</option>
+                            <option value="nyabugereasiatique">Nyabugere Asiatique</option>
+                            <option value="miroire">Miroire</option>
+                            <option value="kabondo">Kabondo</option>
+                            <option value="gatumba">Gatumba</option>
+                            <option value="kinanira1">Kinanira 1</option>
+                            <option value="kinanira2">Kinanira 2</option>
+                            <option value="kinanira3">Kinanira 3</option>
+                            <option value="okafe">Okafe</option>
+                            <option value="centre-ville">Centre Ville</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="property-address">Adresse complète</label>
+                        <input type="text" id="property-address" required>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="property-bedrooms">Chambres</label>
+                            <input type="number" id="property-bedrooms" min="0">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="property-bathrooms">Salles de bain</label>
+                            <input type="number" id="property-bathrooms" min="0">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="property-size">Superficie (m²)</label>
+                            <input type="number" id="property-size" min="0">
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="property-price">Prix ($)</label>
+                        <input type="number" id="property-price" min="0" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="property-rent-period">Période de location</label>
+                        <select id="property-rent-period">
+                            <option value="monthly">Mensuel</option>
+                            <option value="weekly">Hebdomadaire</option>
+                            <option value="daily">Quotidien</option>
+                            <option value="yearly">Annuel</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="property-images">Images de la propriété</label>
+                        <input type="file" id="property-images" multiple accept="image/*" required>
+                        <div class="image-preview" id="image-preview"></div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="property-contract">Contrat de location (PDF)</label>
+                        <input type="file" id="property-contract" accept=".pdf">
+                    </div>
+                    
+                    <button type="submit" class="btn btn-primary">Publier la Propriété</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Live Chat Widget -->
+        <div class="live-chat">
+            <button class="chat-toggle">
+                <i class="fas fa-comments"></i>
+            </button>
+            
+            <div class="chat-window">
+                <div class="chat-header">
+                    <h3>Support RealWealth24</h3>
+                    <button class="close-chat"><i class="fas fa-times"></i></button>
+                </div>
+                
+                <div class="chat-messages" id="chat-messages">
+                    <div class="message agent">
+                        <p>Bonjour! Comment pouvons-nous vous aider aujourd'hui?</p>
+                    </div>
+                </div>
+                
+                <div class="chat-input">
+                    <input type="text" id="chat-input" placeholder="Tapez votre message...">
+                    <button id="send-message"><i class="fas fa-paper-plane"></i></button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-storage.js"></script>
+
+    <!-- Main JavaScript -->
+    <script>
+        // Firebase configuration
+          const firebaseConfig = {
+    apiKey: "AIzaSyAZQid4pKFFcoWfvUMbx0-m_kCkWVduBHc",
+    authDomain: "realwealth24-59506.firebaseapp.com",
+    projectId: "realwealth24-59506",
+    storageBucket: "realwealth24-59506.firebasestorage.app",
+    messagingSenderId: "914361149158",
+    appId: "1:914361149158:web:71181246b3ceb0f38cbd27",
+    measurementId: "G-ZX5RE7KRL0"
+  };
+
+
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+        const auth = firebase.auth();
+        const db = firebase.firestore();
+        const storage = firebase.storage();
+
+        // All JavaScript functionality will be here
+        // This should be in a separate app.js file in production
+    </script>
+</body>
+</html>
